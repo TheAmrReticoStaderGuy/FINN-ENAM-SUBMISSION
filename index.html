@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>FINN</title>
+<style>
+:root{color-scheme:light;--bg:#f4f6f8;--card:#ffffffad;--ink:#17212b;--mut:#687681;--line:#ffffffa8;--up:#167354;--dn:#b8463d;--sig:#c69745;--navy:#193248;--shadow:0 18px 48px #293e5012,0 2px 8px #293e5008;--glass:blur(24px) saturate(165%)}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0b1118;--card:#1b2935ad;--ink:#edf4fa;--mut:#a0afbc;--line:#ffffff18;--up:#74d1aa;--dn:#f08d82;--sig:#e4bd70;--navy:#dcecf6;--shadow:0 18px 48px #0004,0 2px 8px #0002;--glass:blur(24px) saturate(145%)}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{position:relative;isolation:isolate;margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:15px/1.55 "Avenir Next",Inter,system-ui,sans-serif;padding:env(safe-area-inset-top) 0 calc(96px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 12% -8%,color-mix(in srgb,#9bc7e0 35%,transparent),transparent 42%),radial-gradient(ellipse at 94% 28%,color-mix(in srgb,#e4c995 24%,transparent),transparent 40%),radial-gradient(ellipse at 42% 100%,color-mix(in srgb,#9dc8b6 20%,transparent),transparent 46%)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid color-mix(in srgb,var(--sig) 58%,transparent);outline-offset:2px}
+header{position:sticky;top:0;z-index:5;padding:15px max(18px,calc((100vw - 720px)/2)) 13px;background:color-mix(in srgb,var(--bg) 58%,transparent);border-bottom:1px solid var(--line);backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass)}
+h1{font:650 23px/1.15 "Avenir Next",Inter,system-ui,sans-serif;letter-spacing:-.06em;margin:0}
+header small{display:block;color:var(--mut);font-size:13px;margin-top:4px}
+.chips{display:flex;gap:7px;margin-top:12px;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{min-height:36px;border:1px solid var(--line);background:var(--card);color:var(--mut);border-radius:99px;padding:5px 13px;font-size:13px;white-space:nowrap;transition:background .2s,border-color .2s,color .2s,transform .2s}
+.chip:active,.btn:active{transform:scale(.97)}
+.chip.on{background:var(--navy);border-color:var(--navy);color:var(--bg);font-weight:650}
+main{padding:18px 16px 24px;max-width:720px;margin:auto}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;margin:0 0 14px;display:flex;overflow:hidden;box-shadow:var(--shadow);backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass);animation:rise .38s cubic-bezier(.2,.7,.25,1) both;transition:transform .28s cubic-bezier(.2,.7,.25,1),box-shadow .28s,border-color .28s}
+.card:hover{transform:translateY(-2px);box-shadow:0 22px 56px #293e5018,0 3px 10px #293e500b;border-color:color-mix(in srgb,var(--line) 55%,var(--sig))}
+.card:nth-child(2){animation-delay:25ms}.card:nth-child(3){animation-delay:50ms}.card:nth-child(4){animation-delay:75ms}.card:nth-child(5){animation-delay:100ms}
+.bar{width:3px;flex:none}.body{padding:17px;flex:1;min-width:0}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.sym{font-weight:700;letter-spacing:-.02em}
+.cat{color:var(--mut);font-size:12px;text-align:right}
+.t{margin:7px 0 0;overflow-wrap:anywhere;line-height:1.5}
+.mut{color:var(--mut);font-size:13px}
+.btn{min-height:42px;background:linear-gradient(145deg,var(--navy),color-mix(in srgb,var(--navy) 78%,#8ca8ba));color:var(--bg);border:1px solid color-mix(in srgb,var(--navy) 75%,white);border-radius:12px;padding:9px 16px;font-weight:600;box-shadow:0 5px 15px color-mix(in srgb,var(--navy) 18%,transparent);transition:transform .22s cubic-bezier(.2,.7,.25,1),opacity .18s,box-shadow .22s,filter .22s}
+.btn:hover{filter:brightness(1.08);box-shadow:0 8px 20px color-mix(in srgb,var(--navy) 24%,transparent)}
+.btn:disabled{opacity:.55;cursor:wait}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+input,textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px;margin:5px 0 12px;transition:border-color .2s,box-shadow .2s}
+input:focus,textarea:focus{border-color:var(--sig);box-shadow:0 0 0 3px color-mix(in srgb,var(--sig) 16%,transparent);outline:0}
+nav{position:fixed;bottom:max(14px,env(safe-area-inset-bottom));left:50%;z-index:10;transform:translateX(-50%);display:flex;width:min(420px,calc(100% - 32px));padding:6px;background:color-mix(in srgb,var(--card) 74%,transparent);border:1px solid color-mix(in srgb,var(--line) 75%,white);border-radius:19px;box-shadow:0 16px 42px #1a2e3e22, inset 0 1px #ffffff80;backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass)}
+nav button{flex:1;min-height:44px;background:transparent;border:0;border-radius:11px;color:var(--mut);font-size:13px;font-weight:600;transition:color .2s,background .2s,transform .2s}
+nav button:active{transform:scale(.96)}
+nav .on{color:var(--ink);background:color-mix(in srgb,var(--card) 82%,var(--bg));box-shadow:0 2px 8px #1a2e3e12,inset 0 1px #ffffff70}
+.up{color:var(--up)}.dn{color:var(--dn)}
+.demo{background:color-mix(in srgb,var(--sig) 22%,var(--card));color:var(--ink);border-radius:99px;font-size:10px;font-weight:700;letter-spacing:.04em;padding:3px 7px;margin-left:7px}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+td,th{padding:9px 5px;text-align:right;font-size:13px;border-bottom:1px solid var(--line)}
+td:first-child,th:first-child{text-align:left}
+.src{border-left:2px solid var(--sig);padding:8px 0 8px 11px;margin:12px 0;font-size:13px;color:var(--mut);line-height:1.55}
+.ans{white-space:pre-wrap;line-height:1.65}
+.fold{width:100%;min-height:42px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:9px;color:var(--mut);backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass);transition:background .2s,transform .2s}
+.fold:hover,.btn.alt:hover{background:color-mix(in srgb,var(--line) 45%,transparent)}
+@keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(hover:none){.card:hover{transform:none;box-shadow:var(--shadow)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style></head><body>
+<header><h1>FINN</h1><small id="sub">What changed in your portfolio</small><div class="chips" id="chips"></div></header>
+<main id="m"></main>
+<nav><button data-t="today" class="on">Today</button><button data-t="alerts">Alerts</button><button data-t="research">Research</button></nav>
+<script>
+const $=s=>document.querySelector(s),api=async(u,b)=>{const r=await fetch(u,b&&{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});if(!r.ok)throw new Error((await r.json()).detail||r.statusText);return r.json()};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let tab="today",hrs=24,mode="ask",open=new Set(),folded=true,syncStatus="",syncBusy=false,demoStoryOpen=false,demoRoutineOpen=false;
+const col=s=>s>=70?"var(--sig)":s>=40?"var(--mut)":"var(--line)",sign=v=>v==null?"–":`<span class="${v>=0?"up":"dn"}">${v>0?"+":""}${v}%</span>`;
+function sparkline(prices){const vals=prices.map(p=>p.close),lo=Math.min(...vals),hi=Math.max(...vals),span=hi-lo||1;const pts=vals.map((v,i)=>`${(i/(vals.length-1)*300+10).toFixed(1)},${(58-(v-lo)/span*48).toFixed(1)}`).join(" ");return`<svg viewBox="0 0 320 70" role="img" aria-label="Illustrative closing-price trend" style="display:block;width:100%;height:64px;overflow:visible"><polyline points="${pts}" fill="none" stroke="var(--up)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="310" cy="${(58-(vals[vals.length-1]-lo)/span*48).toFixed(1)}" r="4" fill="var(--up)"/></svg>`}
+function demoCase(s){const values=s.metrics.values;const rows=Object.entries(values).map(([name,v])=>`<tr><td>${name.toUpperCase()}</td><td>${v.cur}</td><td>${sign(v.qoq)}</td><td>${sign(v.yoy)}</td></tr>`).join("");const events=s.events.filter(e=>e.kind!=="Routine").map(e=>`<div class="src"><b>${esc(e.kind)} · ${esc(e.when)}</b><br>${esc(e.text)}</div>`).join("");const routine=s.events.find(e=>e.kind==="Routine");return`<section class="card demo-case"><div class="bar" style="background:var(--sig)"></div><div class="body"><div class="row"><span class="sym">${esc(s.company)} <span class="demo">FICTIONAL DEMO</span></span><span class="cat">${s.sym}</span></div><p class="mut">${esc(s.disclaimer)}</p><div class="row"><b>Guidance met in revenue; missed in margin</b><span>${sign(s.move_pct)}</span></div><div class="mut">+${s.move_pct}% close · ${s.volume_multiple}× average volume</div>${sparkline(s.prices)}${demoStoryOpen?`<div class="src">Management's FY27 targets: revenue growth 20–25%; Q2 EBITDA margin at least 12% [1]. Illustrative Q2 revenue grew 21% YoY; margin reached 10.8% [2].</div><table><tr><th>${esc(s.metrics.basis)} · ${esc(s.metrics.unit)}</th><th>Now</th><th>QoQ</th><th>YoY</th></tr>${rows}</table>${events}<button class="fold" onclick="demoRoutineOpen=!demoRoutineOpen;render(1)">${demoRoutineOpen?"Hide":"Show"} routine filing</button>${demoRoutineOpen?`<div class="src">${esc(routine.text)}</div>`:""}`:""}<p><button class="btn alt" onclick="demoStoryOpen=!demoStoryOpen;render(1)">${demoStoryOpen?"Close":"Explore connected demo"}</button></p></div></section>`}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x==b));render()});
+const syncCard=()=>`<div class="card"><div class="body"><div class="row"><b>Portfolio data</b><span class="mut">Refresh on demand</span></div><p><button class="btn" onclick="sync(false)" ${syncBusy?"disabled":""}>Load live data</button> <button class="btn alt" onclick="sync(true)" ${syncBusy?"disabled":""}>Load demo data</button></p><p class="mut">${esc(syncStatus||"Live mode fetches Yahoo prices and NSE filings. Demo data is synthetic.")}</p></div></div>`;
+async function sync(demo){syncBusy=true;syncStatus=demo?"Loading demo data…":"Fetching Yahoo prices and NSE filings…";render();try{const r=await api("/api/sync",{demo});if(r.mode==="demo"){syncStatus="Demo data loaded. Prices and filings are synthetic and marked DEMO."}else{const errors=r.errors||[];syncStatus=`Live sync complete: ${r.price_rows||0} price rows loaded; ${r.announcement_rows||0} new filings.`+(errors.length?` Some requests failed: ${errors.join(", ")}`:"")}}catch(e){syncStatus=`Sync failed: ${e.message}`}finally{syncBusy=false;render()}}
+function chips(){const c=$("#chips");if(tab!="today"){c.innerHTML="";return}c.innerHTML=[[24,"24h"],[72,"3 days"],[168,"7 days"],[720,"30 days"]].map(([h,l])=>`<button class="chip ${h==hrs?"on":""}" data-h="${h}">${l}</button>`).join("");c.onclick=e=>{if(e.target.dataset.h){hrs=+e.target.dataset.h;render()}}}
+function item(a){const o=open.has(a.h);return`<div class="card" onclick="tog('${a.h}')"><div class="bar" style="background:${col(a.score)}"></div><div class="body"><div class="row"><span><span class="sym">${a.sym}</span>${a.demo?'<span class="demo">DEMO</span>':""}</span><span class="cat">${a.cat} · ${a.score}</span></div>
+<div class="t">${esc(a.summary||a.title)}</div>${o?`<div class="mut">${esc(a.title)}</div><div id="r${a.h}"></div><p>${a.url?`<a href="${a.url}" target="_blank" rel="noopener">Open filing</a>`:""} ${a.cat=="results"&&a.url?`<button class="btn alt" onclick="event.stopPropagation();res('${a.h}')">Headline numbers</button>`:""}</p>`:""}</div></div>`}
+window.tog=h=>{open.has(h)?open.delete(h):open.add(h);render(1)};
+window.res=async h=>{const el=$("#r"+h);el.textContent="Reading filing…";try{const j=await api("/api/results/"+h),m=j.metrics;el.innerHTML=`<table><tr><th>${esc(j.basis||"")} ${esc(j.unit||"")}</th><th>Now</th><th>QoQ</th><th>YoY</th></tr>`+Object.entries(m).map(([k,v])=>`<tr><td>${k.toUpperCase()}</td><td>${v.cur??"–"}</td><td>${sign(v.qoq)}</td><td>${sign(v.yoy)}</td></tr>`).join("")+`</table>`}catch(e){el.innerHTML=`<span class="dn">${esc(e.message)}</span>`}};
+async function today(){const [d,s]=await Promise.all([api("/api/digest?hours="+hrs),api("/api/demo/story")]);if(!d.length){$("#sub").textContent="What changed in your portfolio";return syncCard()+demoCase(s)+`<div class="card"><div class="body"><b>No filings in this time window.</b><p class="mut">Try a longer window or refresh portfolio data.</p></div></div>`}const hi=d.filter(a=>a.score>=30),lo=d.filter(a=>a.score<30);
+$("#sub").textContent=`${hi.length} matter · ${lo.length} routine in the last ${hrs>=168?hrs/24+" days":hrs+"h"}`;
+return syncCard()+demoCase(s)+hi.map(item).join("")+(lo.length?`<button class="fold" onclick="folded=!folded;render(1)">${folded?"Show":"Hide"} ${lo.length} routine filings</button>`+(folded?"":lo.map(item).join("")):"")}
+async function alerts(){const [s,a,story]=await Promise.all([api("/api/settings"),api("/api/alerts"),api("/api/demo/story")]);const cats=["results","M&A","management_change","litigation","fund_raise","dividend","credit_rating","capex","pledging","press_release"];
+$("#sub").textContent="You decide what counts as unusual";
+return`<div class="card"><div class="body"><b>Thresholds</b><div class="mut">Volume vs 20-day average (×)</div><input id="vx" type="number" step=".1" value="${s.vol_x}"><div class="mut">Daily price move (±%)</div><input id="mp" type="number" step=".5" value="${s.move_pct}">
+<div class="mut">Announcement types to alert on</div><div class="chips" style="flex-wrap:wrap">${cats.map(c=>`<button class="chip ${s.cats.includes(c)?"on":""}" data-c="${c}" onclick="this.classList.toggle('on')">${c}</button>`).join("")}</div><p><button class="btn" onclick="saveS()">Save</button></p></div></div>`+
+`<div class="card demo-case"><div class="bar" style="background:var(--up)"></div><div class="body"><div class="row"><b>${esc(story.company)} alert example</b><span class="demo">DEMO</span></div>${sparkline(story.prices)}<div class="t">${Math.abs(story.move_pct)>=s.move_pct?`Price move ${story.move_pct>=0?"+":""}${story.move_pct}% crosses your ±${s.move_pct}% threshold.`:"Price move is below your current threshold."} ${story.volume_multiple>=s.vol_x?`Volume ${story.volume_multiple}× crosses your ${s.vol_x}× threshold.`:"Volume is below your current threshold."}</div><p class="mut">Fictional prices and volume, included to demonstrate how your settings affect alerts.</p></div></div>`+
+(a.length?a.map(x=>`<div class="card"><div class="bar" style="background:${x.type=="filing"?"var(--sig)":x.type=="price"&&x.val<0?"var(--dn)":"var(--up)"}"></div><div class="body"><div class="row"><span class="sym">${x.sym}${x.demo?'<span class="demo">DEMO</span>':""}</span><span class="cat">${x.type} · ${x.d}</span></div><div class="t">${esc(x.msg)}</div></div></div>`).join(""):`<p class="mut">Nothing crosses your thresholds.</p>`)}
+window.saveS=async()=>{await api("/api/settings",{vol_x:+$("#vx").value,move_pct:+$("#mp").value,cats:[...document.querySelectorAll("[data-c].on")].map(b=>b.dataset.c)});render()};
+window.useDemoResearch=()=>{localStorage.tk="DEMOCO";mode="guidance";render()};
+function research(){$("#sub").textContent="Answers come only from annual reports and concall transcripts";
+return`<div class="card"><div class="body"><b>Any NSE ticker</b><input id="tk" placeholder="e.g. TATAMOTORS" autocapitalize="characters" value="${esc(localStorage.tk||"")}"><div class="row" style="justify-content:flex-start"><button class="btn alt" onclick="ing()">Load documents</button><button class="btn alt" onclick="useDemoResearch()">Try fictional demo</button><span class="mut" id="im"></span></div>
+<div class="mut">Or paste annual report / transcript PDF URLs, one per line</div><textarea id="urls" rows="2" placeholder="https://.../annual-report.pdf"></textarea>
+<div class="chips" style="margin:10px 0 4px">${[["ask","Ask"],["guidance","Promised vs delivered"],["bullbear","Bull vs bear"]].map(([k,l])=>`<button class="chip ${k==mode?"on":""}" onclick="mode='${k}';render(1)">${l}</button>`).join("")}</div>
+${mode=="ask"?'<textarea id="q" rows="2" placeholder="Why did margins decline?"></textarea>':""}<button class="btn" onclick="go()">Research</button></div></div><div id="out"></div>`}
+window.ing=async()=>{const t=$("#tk").value.trim();if(!t)return;localStorage.tk=t;const urls=$("#urls").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);$("#im").textContent="Fetching reports… (can take a minute)";try{const r=await api("/api/ingest/"+encodeURIComponent(t),urls);const failures=r.errors.length?`; ${r.errors.length} document(s) failed`: "";$("#im").textContent=`${r.chunks_added} passages indexed from ${r.docs.length} docs${failures}`}catch(e){$("#im").textContent=e.message}};
+window.go=async()=>{const t=$("#tk").value.trim();if(!t)return;localStorage.tk=t;$("#out").innerHTML=`<p class="mut">Reading primary sources…</p>`;try{const r=await api("/api/research/"+t,{q:$("#q")?.value||"",mode});
+$("#out").innerHTML=`<div class="card"><div class="body ans">${esc(r.answer)}${r.sources.map(s=>`<div class="src"><b>[${s.n}]</b> ${esc(s.doc.split("/").pop())}, p.${s.page}<br>${esc(s.excerpt)}…</div>`).join("")}</div></div>`}catch(e){$("#out").innerHTML=`<p class="dn">${esc(e.message)}</p>`}};
+async function render(keep){const y=scrollY;chips();try{$("#m").innerHTML=await({today,alerts,research}[tab]())}catch(e){$("#m").innerHTML=empty()}if(keep)scrollTo(0,y)}
+render();
+</script></body></html>
